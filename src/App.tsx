@@ -1,9 +1,10 @@
 import React from 'react';
+import {Home, Login, Register} from './components/pages';
 
 function App() {
   return (
-    <div className="bg-red-800">
-      <h4 className="text-white">helloworld</h4>
+    <div className="flex justify-center items-center bg-blue-200 h-screen">
+      <Home />
     </div>
   );
 }
