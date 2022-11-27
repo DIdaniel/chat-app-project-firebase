@@ -12,9 +12,9 @@ export const Navbar = (props: NavbarProps) => {
 
   /** Render */
   return (
-    <div className="bg-cyan-900 h-16 flex items-center justify-between px-1">
+    <div className="bg-cyan-900 h-16 flex items-center justify-between px-2">
       <p className="text-white">App Chat</p>
-      <div className="flex items-center justify-between w-[8rem]">
+      <div className="flex items-center justify-between w-[7.5rem]">
         <img
           src={
             'https://cdn0.iconfinder.com/data/icons/dog-avatars/192/avatar-dog-saint-bernard-puppy-512.png'

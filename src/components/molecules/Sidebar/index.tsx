@@ -15,7 +15,7 @@ export const Sidebar = (props: SidebarProps) => {
 
   /** Render */
   return (
-    <div className="bg-cyan-700 w-56 h-full">
+    <div className="bg-cyan-700 w-80 h-full">
       <Navbar />
       <Search />
       <Chats />

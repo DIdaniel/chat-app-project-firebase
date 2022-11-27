@@ -17,7 +17,7 @@ export const Search = (props: SearchProps) => {
         <input
           type="text"
           placeholder="Find a user"
-          className="w-full bg-transparent px-2 py-1 outline-none placeholder:font-thin"
+          className="w-full bg-transparent px-2 py-1 outline-none placeholder:font-thin placeholder:text-gray-200 placeholder:text-[13px]"
         />
       </div>
       <div className="flex items-center">

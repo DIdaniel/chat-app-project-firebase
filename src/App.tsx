@@ -3,8 +3,8 @@ import {Home, Login, Register} from './components/pages';
 
 function App() {
   return (
-    <div className=" flex justify-center items-center bg-cyan-200 h-screen">
-      <div className="w-10/12 h-[30rem]" style={{border: '1px dashed red'}}>
+    <div className="flex justify-center items-center bg-sky-200 h-screen">
+      <div className="w-11/12 h-[30rem]">
         <Home />
       </div>
     </div>

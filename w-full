@@ -1,0 +1,31 @@
+import React from 'react';
+import {Input} from '../Input';
+import {BsFillCameraVideoFill} from 'react-icons/bs';
+import {FaUserPlus} from 'react-icons/fa';
+import {AiTwotoneSetting} from 'react-icons/ai';
+
+type ChatProps = {
+  //
+};
+
+export const Chat = (props: ChatProps) => {
+  /** Property */
+  const {...others} = props;
+
+  /** Function */
+
+  /** Render */
+  return (
+    <div className="">
+      <div className="flex items-center justify-between">
+        <span>Na-Na</span>
+        <div className="flex">
+          <BsFillCameraVideoFill />
+          <FaUserPlus />
+          <AiTwotoneSetting />
+        </div>
+      </div>
+      {/* <Input /> */}
+    </div>
+  );
+};

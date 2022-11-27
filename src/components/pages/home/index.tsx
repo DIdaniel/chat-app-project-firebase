@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, Sidebar} from '../../molecules';
+import {Chat, Input, Sidebar} from '../../molecules';
 
 type HomeProps = {
   //
@@ -13,9 +13,9 @@ export const Home = (props: HomeProps) => {
 
   /** Render */
   return (
-    <div className="bg-blue-400 h-full w-full flex">
+    <div className="h-full w-full flex">
       <Sidebar />
-      <Input />
+      <Chat />
     </div>
   );
 };
