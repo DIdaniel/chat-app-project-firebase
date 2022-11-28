@@ -2,11 +2,12 @@ import React from 'react';
 
 type MessageProps = {
   user?: string;
+  text: string;
 };
 
 export const Message = (props: MessageProps) => {
   /** Property */
-  const {user, ...others} = props;
+  const {user, text, ...others} = props;
 
   /** Function */
 
@@ -29,7 +30,7 @@ export const Message = (props: MessageProps) => {
         className="p-2 rounded-bl-lg rounded-tr-lg rounded-br-lg"
         style={{backgroundColor: user ? '#8da4f1' : '#eaa000'}}
       >
-        <p>hello world</p>
+        <p>{text}</p>
       </div>
       {/* <div> */}
       {/*   <p>Hello</p> */}

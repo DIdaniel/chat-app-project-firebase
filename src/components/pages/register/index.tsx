@@ -1,4 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {BsImage} from 'react-icons/bs';
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {auth, storage} from '../../../firebase';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage';
 
 type RegisterProps = {
   //
@@ -6,8 +15,44 @@ type RegisterProps = {
 
 export const Register = (props: RegisterProps) => {
   /** Porperty */
+  const {...others} = props;
+
+  const [error, setError] = useState(false);
 
   /** Function */
+  // React.FormEvent<HTMLFormElement>
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    const displayName = event.target[0].value;
+    const email = event.target[1].value;
+    const password = event.target[2].value;
+    const file = event.target[3].files[0];
+
+    try {
+      const res = createUserWithEmailAndPassword(auth, email, password);
+
+      const storageRef = ref(storage, displayName);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        error => {
+          setError(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL
+            });
+          });
+        }
+      );
+    } catch (err) {
+      setError(true);
+    }
+  };
 
   /** Render */
   return (
@@ -15,7 +60,10 @@ export const Register = (props: RegisterProps) => {
       <div className="flex flex-col items-center justify-between h-full">
         <p className="text-cyan-600 font-bold text-3xl">Chat App</p>
         <p className="">Login</p>
-        <form className="flex flex-col h-[20rem] p-2">
+        <form
+          onSubmit={event => handleSubmit(event)}
+          className="flex flex-col h-[20rem] p-2"
+        >
           <input
             type="text"
             placeholder="Enter your name"
@@ -36,17 +84,19 @@ export const Register = (props: RegisterProps) => {
             type="file"
             className="border-b-2 border-gray-300 outline-none w-72 hidden"
           />
-          <label htmlFor="file" className="flex items-end cursor-pointer" mt-2>
-            <img
-              src={
-                'https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/512/external-file-multimedia-kiranshastry-lineal-color-kiranshastry-3.png'
-              }
-              alt="file"
-              className="w-7 h-7 mr-2"
-            />
+          <label
+            htmlFor="file"
+            className="flex items-center cursor-pointer"
+            mt-2
+          >
+            <BsImage className="w-5 h-5 mr-2" />
             <p className="text-cyan-600 font-bold text-30">Add an avatar</p>
           </label>
-          <button className="bg-blue-300 text-white rounded-md p-2 mt-10">
+          {error && <span>Somthing went wrong...</span>}
+          <button
+            type={'submit'}
+            className="bg-blue-300 text-white rounded-md p-2 mt-10"
+          >
             Sign up
           </button>
         </form>
