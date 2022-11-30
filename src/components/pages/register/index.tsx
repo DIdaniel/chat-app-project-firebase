@@ -1,13 +1,9 @@
 import React, {useState} from 'react';
 import {BsImage} from 'react-icons/bs';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 import {auth, storage} from '../../../firebase';
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL
-} from 'firebase/storage';
+import {doc, setDoc} from 'firebase/firestore';
 
 type RegisterProps = {
   //
@@ -21,37 +17,39 @@ export const Register = (props: RegisterProps) => {
 
   /** Function */
   // React.FormEvent<HTMLFormElement>
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const displayName = (event.currentTarget[0] as HTMLInputElement).value;
+    const email = (event.currentTarget[1] as HTMLInputElement).value;
+    const password = (event.currentTarget[2] as HTMLInputElement).value;
+    const file = (event.currentTarget[3] as HTMLInputElement).files?.[0];
 
-    const displayName = event.target[0].value;
-    const email = event.target[1].value;
-    const password = event.target[2].value;
-    const file = event.target[3].files[0];
+    console.log(file);
 
-    try {
-      const res = createUserWithEmailAndPassword(auth, email, password);
+    // try {
+    //   const res = await createUserWithEmailAndPassword(auth, email, password); // console.log('res >> ', res);
 
-      const storageRef = ref(storage, displayName);
+    //   const storageRef = ref(storage, displayName);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+    //   const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on(
-        error => {
-          setError(true);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL
-            });
-          });
-        }
-      );
-    } catch (err) {
-      setError(true);
-    }
+    //   uploadTask.on(
+    //     (error: any) => {
+    //       setError(true);
+    //     },
+    //     () => {
+    //       getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
+    //         console.log(downloadURL);
+    //         // await updateProfile(res.user, {
+    //         //   displayName,
+    //         //   photoURL: downloadURL
+    //         // });
+    //       });
+    //     }
+    //   );
+    // } catch (err) {
+    //   setError(true);
+    // }
   };
 
   /** Render */
@@ -60,10 +58,7 @@ export const Register = (props: RegisterProps) => {
       <div className="flex flex-col items-center justify-between h-full">
         <p className="text-cyan-600 font-bold text-3xl">Chat App</p>
         <p className="">Login</p>
-        <form
-          onSubmit={event => handleSubmit(event)}
-          className="flex flex-col h-[20rem] p-2"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col h-[20rem] p-2">
           <input
             type="text"
             placeholder="Enter your name"
