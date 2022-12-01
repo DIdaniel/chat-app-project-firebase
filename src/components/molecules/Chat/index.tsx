@@ -32,7 +32,7 @@ export const Chat = (props: ChatProps) => {
           </button>
         </div>
       </div>
-      <div className="bg-white border-b border-gray-400">
+      <div className="bg-white">
         <Messages />
         <Input />
       </div>
