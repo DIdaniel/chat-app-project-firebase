@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {BsImage} from 'react-icons/bs';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
-import {auth, storage} from '../../../firebase';
+import {auth, storage, db} from '../../../firebase';
 import {doc, setDoc} from 'firebase/firestore';
 
 type RegisterProps = {
@@ -22,34 +22,44 @@ export const Register = (props: RegisterProps) => {
     const displayName = (event.currentTarget[0] as HTMLInputElement).value;
     const email = (event.currentTarget[1] as HTMLInputElement).value;
     const password = (event.currentTarget[2] as HTMLInputElement).value;
-    const file = (event.currentTarget[3] as HTMLInputElement).files?.[0];
+    const file: any = (event.currentTarget[3] as HTMLInputElement).files?.[0];
 
     console.log(file);
 
-    // try {
-    //   const res = await createUserWithEmailAndPassword(auth, email, password); // console.log('res >> ', res);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-    //   const storageRef = ref(storage, displayName);
+      const storageRef = ref(storage, displayName);
 
-    //   const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    //   uploadTask.on(
-    //     (error: any) => {
-    //       setError(true);
-    //     },
-    //     () => {
-    //       getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
-    //         console.log(downloadURL);
-    //         // await updateProfile(res.user, {
-    //         //   displayName,
-    //         //   photoURL: downloadURL
-    //         // });
-    //       });
-    //     }
-    //   );
-    // } catch (err) {
-    //   setError(true);
-    // }
+      uploadTask.on(
+        'state_changed',
+        snapshot => {},
+        (error: any) => {
+          setError(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL
+            });
+
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL
+            });
+
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
+          });
+        }
+      );
+    } catch (err) {
+      setError(true);
+    }
   };
 
   /** Render */

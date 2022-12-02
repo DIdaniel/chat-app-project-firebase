@@ -11,7 +11,7 @@ export const Login = (props: LoginProps) => {
 
   /** Render */
   return (
-    <div className=" bg-white w-[25rem] h-[20rem] py-8 rounded-lg">
+    <div className="bg-white w-[25rem] h-[20rem] py-8 rounded-lg">
       <div className="flex flex-col items-center justify-between h-full">
         <p className="text-cyan-600 font-bold text-3xl">Chat App</p>
         <p className="">Login</p>
