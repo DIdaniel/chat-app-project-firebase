@@ -11,11 +11,13 @@ export const Login = (props: LoginProps) => {
 
   /** Render */
   return (
-    <div className="bg-white w-[25rem] h-[20rem] py-8 rounded-lg">
+    <div className="bg-white w-[25rem] h-[25rem] py-8 rounded-lg">
       <div className="flex flex-col items-center justify-between h-full">
-        <p className="text-cyan-600 font-bold text-3xl">Chat App</p>
-        <p className="">Login</p>
-        <form className="flex flex-col h-[20rem] p-2">
+        <div className="flex flex-col items-center">
+          <p className="text-cyan-600 font-bold text-3xl">Chat App</p>
+          <p className="mt-1">Login</p>
+        </div>
+        <form className="flex flex-col justify-between h-[12rem] p-2">
           <input
             type="email"
             placeholder="Enter your email"

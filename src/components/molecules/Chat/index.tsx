@@ -17,7 +17,7 @@ export const Chat = (props: ChatProps) => {
 
   /** Render */
   return (
-    <div className="w-full">
+    <div {...others} className="w-full">
       <div className="flex items-center justify-between bg-sky-800 h-16 px-3">
         <span className="text-white font-bold">Na-Na</span>
         <div className="flex justify-between w-20">

@@ -4,7 +4,7 @@ import {Home, Login, Register} from './components/pages';
 
 function App() {
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-sky-200">
+    <div className="flex justify-center items-center h-screen w-screen bg-sky-200 px-12">
       <BrowserRouter>
         <Routes>
           <Route path="/">
