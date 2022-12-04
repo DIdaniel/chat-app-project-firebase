@@ -13,7 +13,7 @@ export const Home = (props: HomeProps) => {
 
   /** Render */
   return (
-    <div className="h-screen w-full flex items-center">
+    <div {...others} className="h-screen w-full flex items-center">
       <Sidebar />
       <Chat />
     </div>

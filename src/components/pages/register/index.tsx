@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate, Link} from 'react-router-dom';
 import {BsImage} from 'react-icons/bs';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage';
@@ -14,17 +15,15 @@ export const Register = (props: RegisterProps) => {
   const {...others} = props;
 
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   /** Function */
-  // React.FormEvent<HTMLFormElement>
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const displayName = (event.currentTarget[0] as HTMLInputElement).value;
     const email = (event.currentTarget[1] as HTMLInputElement).value;
     const password = (event.currentTarget[2] as HTMLInputElement).value;
     const file: any = (event.currentTarget[3] as HTMLInputElement).files?.[0];
-
-    console.log(file);
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -54,6 +53,8 @@ export const Register = (props: RegisterProps) => {
             });
 
             await setDoc(doc(db, 'userChats', res.user.uid), {});
+
+            navigate('/');
           });
         }
       );
@@ -107,7 +108,7 @@ export const Register = (props: RegisterProps) => {
         </form>
 
         <p className="text-gray-400 text-[13px] mt-2">
-          You do have an account? Login
+          You do have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
