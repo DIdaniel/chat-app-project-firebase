@@ -24,12 +24,6 @@ export const Message = (props: MessageProps) => {
     }
   }, [chat]);
 
-  useEffect(() => {
-    console.log('chat >> ', chat);
-    console.log('currentUser >> ', currentUser);
-    console.log('chatCtx >> ', chatCtx.state);
-  }, [chat, currentUser, chatCtx]);
-
   /** Render */
   return (
     <div
@@ -43,7 +37,10 @@ export const Message = (props: MessageProps) => {
     >
       <div
         className="flex flex-col justify-center"
-        style={{margin: user ? '0 0 0 10px' : '0 10px 0 0'}}
+        style={{
+          margin:
+            chat.senderId === currentUser?.uid ? '0 0 0 10px' : '0 10px 0 0'
+        }}
       >
         <img
           src={
@@ -63,10 +60,15 @@ export const Message = (props: MessageProps) => {
         </span>
       </div>
       <div
-        className="p-3 rounded-bl-lg rounded-tr-lg rounded-br-lg w-full"
+        // rounded-bl-lg rounded-tr-lg rounded-br-lg
+        className="p-3 "
         style={{
           backgroundColor:
-            chat.senderId === currentUser?.uid ? '#8da4f1' : '#eaa000'
+            chat.senderId === currentUser?.uid ? '#8da4f1' : '#eaa000',
+          borderRadius:
+            chat.senderId === currentUser?.uid
+              ? '10px 0 10px 10px'
+              : '0 10px 10px 10px'
         }}
       >
         <p>{chat.text}</p>

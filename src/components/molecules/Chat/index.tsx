@@ -20,7 +20,7 @@ export const Chat = (props: ChatProps) => {
 
   /** Render */
   return (
-    <div {...others} className="w-full">
+    <div {...others} className="w-full h-full">
       <div className="flex items-center justify-between bg-sky-800 h-16 px-3">
         <span className="text-white font-bold">
           {chatCtx?.state?.user?.displayName ?? ''}
@@ -37,7 +37,7 @@ export const Chat = (props: ChatProps) => {
           </button>
         </div>
       </div>
-      <div className="bg-white border-b border-gray-400">
+      <div className="border-b border-gray-400 bg-white">
         <Messages />
         <Input />
       </div>

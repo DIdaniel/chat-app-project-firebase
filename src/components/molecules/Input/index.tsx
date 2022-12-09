@@ -87,15 +87,15 @@ export const Input = (props: InputProps) => {
 
   /** Render */
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <input
         type="text"
         placeholder="Enter text..."
         onChange={e => setText(e.target.value)}
         value={text}
-        className="w-full p-3 outline-none"
+        className="w-full px-4 py-3 outline-none"
       />
-      <div className="flex items-center justify-between w-[9rem] px-2">
+      <div className="flex items-center justify-between w-[9rem] px-2 py-[19px]">
         <BsPaperclip />
         <input
           type="file"
